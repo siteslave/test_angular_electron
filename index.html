@@ -5,6 +5,7 @@
     <title>Hello World!</title>
 
     <script src="./app.js"></script>
+    <script src="./factory.js"></script>
 
     <script>
 
@@ -117,7 +118,7 @@
 
     <select ng-model="typeId" ng-change="changeUserType()"
             ng-show="showType">
-      <option ng-repeat="t in userTypes2"
+      <option ng-repeat="t in userTypes"
               value="{{ t.id }}">
         {{ t.name }}
       </option>
@@ -125,7 +126,7 @@
 
     <input type="text" ng-model="query">
     <ul>
-      <li ng-repeat="user in users2 | filter: query">
+      <li ng-repeat="user in users | filter: query">
         {{ user.id }} - {{ user.name }}
       </li>
     </ul>
