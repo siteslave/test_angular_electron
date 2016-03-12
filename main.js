@@ -6,13 +6,35 @@ const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
+const ipcMain = electron.ipcMain;
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
+ipcMain.on('open-window', function(event, arg) {
+  if (mainWindow.isVisible()) {
+    mainWindow.hide();
+  } else {
+    //createWindow();
+    mainWindow.show();
+  }
+});
+
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    center: true,
+    resizeable: false,
+    frame: true,
+    fullscreen: false,
+    show: true,
+    skipTaskbar: true,
+    icon: './img/icon.png'
+  });
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
@@ -27,6 +49,12 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+  mainWindow.on('minimize', function(e) {
+    mainWindow.hide();
+  });
+
+
 }
 
 // This method will be called when Electron has finished

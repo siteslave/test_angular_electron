@@ -1,13 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
   <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
+
+    <script src="./app.js"></script>
+
+    <script>
+
+      'use strict';
+
+      const remote = require('electron').remote;
+      const Menu = remote.Menu;
+      const MenuItem = remote.MenuItem;
+
+      const ipcRenderer = require('electron').ipcRenderer;
+
+      const dialog = remote.dialog;
+
+      const Tray = remote.Tray;
+
+      let appIcon = null;
+      appIcon = new Tray('./img/icon2.png');
+
+      let contextMenuItem = [
+        {
+          label: 'Show window',
+          click: function () {
+            ipcRenderer.sendSync('open-window');
+          }
+        },
+        {label: 'Close program'}
+      ];
+
+      let contextMenu = Menu.buildFromTemplate(contextMenuItem);
+
+      appIcon.setToolTip('My Application tooltip');
+      appIcon.setContextMenu(contextMenu);
+
+
+      let menu = new Menu();
+
+      menu.append(new MenuItem({
+        label: 'Test menu',
+        type: 'checkbox',
+        click: function () {
+          console.log('Test menu')
+        }
+      }));
+
+      menu.append(new MenuItem({
+        label: 'Test menu 2',
+        click: function () {
+          console.log('Test menu')
+        }
+      }));
+
+      window.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+        menu.popup(remote.getCurrentWindow());
+      }, false);
+
+
+      let templateAppMenu = [
+        {
+          label: 'Files',
+          submenu: [
+            {
+              label: 'Setting',
+              accelerator: 'CmdOrCtrl+S',
+              click: function() {
+                //alert('Setting');
+                dialog.showMessageBox({
+                  type: 'error',
+                  title: 'Alert box',
+                  message: 'กำหนดค่าการเชื่อมต่อ',
+                  buttons: ['ตกลง', 'ยกเลิก'],
+                  noLink: true
+                })
+              }
+            },
+            {label: 'Report'},
+            {type: 'separator'},
+            {label: 'Quit'}
+          ]
+        },
+        {
+          label: 'Tools',
+          submenu: [
+            {label: 'Connection Setting'},
+            {label: 'Export Data'}
+          ]
+        }
+      ];
+
+      let menuApp = Menu.buildFromTemplate(templateAppMenu);
+      Menu.setApplicationMenu(menuApp);
+
+
+    </script>
+
   </head>
   <body>
     <h1>Hello World!</h1>
-    We are using node <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+
+  <div ng-controller="MainCtrl">
+
+    <h1>Users list</h1>
+
+    <select ng-model="departmentId"
+            ng-change="changeDepartment()">
+      <option ng-repeat="d in departments"
+              value="{{ d.id }}">{{ d.name }}
+      </option>
+    </select>
+
+    <select ng-model="typeId" ng-change="changeUserType()"
+            ng-show="showType">
+      <option ng-repeat="t in userTypes2"
+              value="{{ t.id }}">
+        {{ t.name }}
+      </option>
+    </select>
+
+    <input type="text" ng-model="query">
+    <ul>
+      <li ng-repeat="user in users2 | filter: query">
+        {{ user.id }} - {{ user.name }}
+      </li>
+    </ul>
+
+    {{ name }}
+
+    <input type="text" ng-model="name">
+    <button ng-click="showName()">
+      Show Name
+    </button>
+    <button ng-click="setName('NodeJS', 'Angular')">
+      Set Name
+    </button>
+  </div>
+
   </body>
 </html>
