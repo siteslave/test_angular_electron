@@ -106,42 +106,12 @@
   <body>
     <h1>Hello World!</h1>
 
-  <div ng-controller="MainCtrl">
+    <a href="#/">Main</a> |
+    <a ui-sref="about">About</a>
 
-    <h1>Users list</h1>
+    <hr>
 
-    <select ng-model="departmentId"
-            ng-change="changeDepartment()">
-      <option ng-repeat="d in departments"
-              value="{{ d.id }}">{{ d.name }}
-      </option>
-    </select>
-
-    <select ng-model="typeId" ng-change="changeUserType()"
-            ng-show="showType">
-      <option ng-repeat="t in userTypes"
-              value="{{ t.id }}">
-        {{ t.name }}
-      </option>
-    </select>
-
-    <input type="text" ng-model="query">
-    <ul>
-      <li ng-repeat="user in users | filter: query">
-        {{ user.id }} - {{ user.name }}
-      </li>
-    </ul>
-
-    {{ name }}
-
-    <input type="text" ng-model="name">
-    <button ng-click="showName()">
-      Show Name
-    </button>
-    <button ng-click="setName('NodeJS', 'Angular')">
-      Set Name
-    </button>
-  </div>
+    <ui-view></ui-view>
 
   </body>
 </html>

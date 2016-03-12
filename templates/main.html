@@ -1,0 +1,39 @@
+
+<div>
+
+  <h1>Users list</h1>
+
+  <select ng-model="departmentId"
+          ng-change="changeDepartment()">
+    <option ng-repeat="d in departments"
+            value="{{ d.id }}">{{ d.name }}
+    </option>
+  </select>
+
+  <select ng-model="typeId" ng-change="changeUserType()"
+          ng-show="showType">
+    <option ng-repeat="t in userTypes"
+            value="{{ t.id }}">
+      {{ t.name }}
+    </option>
+  </select>
+
+  <input type="text" ng-model="query">
+  <ul>
+    <li ng-repeat="user in users | filter: query">
+      <a href="#/detail/{{ user.id }}/{{ user.name }}">
+        {{ user.id }} - {{ user.name }}
+      </a>
+    </li>
+  </ul>
+
+  {{ name }}
+
+  <input type="text" ng-model="name">
+  <button ng-click="showName()">
+    Show Name
+  </button>
+  <button ng-click="setName('NodeJS', 'Angular')">
+    Set Name
+  </button>
+</div>
