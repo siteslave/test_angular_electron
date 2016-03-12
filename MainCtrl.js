@@ -1,7 +1,12 @@
 'use strict';
 
 angular.module('app.controller.Main', ['app.service'])
-  .controller('MainCtrl', function ($scope, UserService) {
+  .controller('MainCtrl', function ($scope, $state, UserService) {
+
+    $scope.getDetail = function (user) {
+      $state.go('detail', user)
+    };
+
     $scope.name = 'Electron JS';
 
     $scope.showName = function () {
