@@ -4,7 +4,7 @@ angular.module('app.controller.Main', ['app.service'])
   .controller('MainCtrl', function ($scope, $state, UserService) {
 
     $scope.getDetail = function (user) {
-      $state.go('detail', user)
+      $state.go('detail', {id: user.id, name: user.name})
     };
 
     $scope.name = 'Electron JS';

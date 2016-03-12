@@ -6,7 +6,8 @@ require('angular-ui-router');
 
 angular.module('app', [
   'ui.router',
-  'app.controller.Main'
+  'app.controller.Main',
+  'app.controllers.Detail'
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -28,9 +29,7 @@ angular.module('app', [
     .state('detail', {
       url: '/detail/:id/:name',
       templateUrl: './templates/detail.html',
-      controller: function ($scope, $stateParams) {
-        console.log($stateParams);
-      }
+      controller: 'DetailCtrl'
     })
 
 })
