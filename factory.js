@@ -20,6 +20,16 @@ angular.module('app.service', [])
     ];
 
     return {
+      getDetail(userId) {
+        let user = null;
+
+        users.forEach(function (v) {
+          if (v.id == userId) user = v.name;
+        });
+
+        return user;
+
+      },
       getUsers(typeId) {
         let _users = [];
 
